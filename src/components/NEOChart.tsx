@@ -1,6 +1,6 @@
+// src/components/NEOChart.tsx
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
-
 
 interface NEOChartProps {
   data: {
@@ -29,28 +29,15 @@ const NEOChart: React.FC<NEOChartProps> = ({ data }) => {
       layout="vertical"
       margin={{ top: 20, right: 30, left: 100, bottom: 5 }}
     >
-      <CartesianGrid
-
-      strokeDasharray="3 3 " />
-      <XAxis
-      type="number" label={{ value: 'Min Estimated Diameter (km)', position: 'insideBottom', offset: -5 }} />
-      <YAxis
-        dataKey="name"
-        type="category"
-        label={{ value: 'NEO Name', angle: -90, position: 'insideLeft', offset: -55 }}
-        width={200}
-
-        // padding={{ top: 20, bottom: 20 }}
-
-      />
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis type="number" label={{ value: 'Estimated Diameter (km)', position: 'insideBottom', offset: -5 }} />
+      <YAxis dataKey="name" type="category" label={{ value: 'NEO Name', angle: -90, position: 'insideLeft', offset: -55 }} width={200} />
       <Tooltip />
-      <Legend
-      verticalAlign='top'
-       />
+      <Legend verticalAlign='top' />
       <Bar dataKey="minDiameter" fill="#342FA1FF" name="Min Estimated Diameter (km)" />
       <Bar dataKey="maxDiameter" fill="#FF0000FF" name="Max Estimated Diameter (km)" />
     </BarChart>
   );
-}
+};
 
 export default NEOChart;
