@@ -1,10 +1,12 @@
-// src/components/Home.tsx
+
 import React, { useState, useEffect } from 'react';
 import NEOChart from './NEOChart';
 import Loader from './Loader';
 import { NasaService } from '../_services/nasa.service';
-import { Autocomplete, TextField } from '@mui/material';
-
+import { Autocomplete, IconButton, TextField } from '@mui/material';
+import NEOTable from './NEOTable';
+import TableChartIcon from '@mui/icons-material/TableChart';
+import BarChartIcon from '@mui/icons-material/BarChart';
 interface NEO {
   id: string;
   name: string;
@@ -24,6 +26,7 @@ const Home: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
   const [filter, setFilter] = useState<string>('');
+  const [view, setView] = useState<'chart' | 'table'>('chart');
 
   const getAllData = () => {
     NasaService.getAllNasaData()
@@ -52,21 +55,21 @@ console.log(orbitalBodies);
   if (error) return <p>Error loading data: {error.message}</p>;
 
   return (
-      <div className="container mx-auto p-4 m-4 flex">
-      <div className="flex-grow">
-        <NEOChart data={filteredData} />
-      </div>
-      <div className="ml-4">
-        <Autocomplete
-          options={orbitalBodies}
-          getOptionLabel={(option) => option}
-          style={{ width: 230 }}
-          renderInput={(params) => <TextField {...params} label="Orbital Body" variant="outlined" />}
-          onChange={(event, value) => setFilter(value || '')}
-          disableClearable
-        />
-      </div>
+    <div className="container mx-auto p-4 m-4">
+    <div className="flex justify-between mb-4">
+    <IconButton onClick={() => setView(view === 'chart' ? 'table' : 'chart')}>
+          {view === 'chart' ? <TableChartIcon /> : <BarChartIcon />}
+        </IconButton>
+      <Autocomplete
+        options={orbitalBodies}
+        getOptionLabel={(option) => option}
+        style={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label="Orbital Body" variant="outlined" />}
+        onChange={(event, value) => setFilter(value || '')}
+      />
     </div>
+    {view === 'chart' ? <NEOChart data={filteredData} /> : <NEOTable data={filteredData} />}
+  </div>
   );
 };
 

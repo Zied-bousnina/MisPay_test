@@ -1,4 +1,4 @@
-// src/components/NEOChart.tsx
+
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
 
